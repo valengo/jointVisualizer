@@ -1,7 +1,7 @@
 # Joint Visualizer
 An App to visualize the joints when capturing body motion with ARKit 3.
 
-# Capturing Body Motion in 3D
+## Capturing Body Motion in 3D
 Track a person in the physical environment and visualize their motion by applying the same body movements to a virtual puppet.  
 
 ## Overview
