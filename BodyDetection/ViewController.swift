@@ -41,6 +41,8 @@ class ViewController: UIViewController, ARSessionDelegate {
     
     let sphereAnchor = AnchorEntity()
     var jointSpheres = [Entity]()
+    var initalSpheresTransforms = [Transform]()
+    var addSphereInterval = 0
     
     var jointDots = [CAShapeLayer]()
     
@@ -113,11 +115,8 @@ class ViewController: UIViewController, ARSessionDelegate {
                     let jointName = character.jointName(forPath: character.jointNames[i])
                     if let transform = bodyAnchor.skeleton.modelTransform(for: jointName) {
                         let position = bodyPosition + simd_make_float3(transform.columns.3)
-                        let sphere = CustomSphere(color: .blue, radius: 0.05)
-                        sphereAnchor.addChild(sphere)
-                        sphere.position = position
-                        sphere.orientation = bodyOrientation
-                        jointSpheres.append(sphere)
+                        let newSphereTransfrom = Transform(scale: [1, 1, 1], rotation: bodyOrientation, translation: position)
+                        initalSpheresTransforms.append(newSphereTransfrom)
                     } else {
                         print("Joint \(jointName) not found by name!")
                     }
@@ -195,6 +194,7 @@ class ViewController: UIViewController, ARSessionDelegate {
             $0.removeFromParent()
         }
         jointSpheres.removeAll()
+        initalSpheresTransforms.removeAll()
     }
     
     @IBAction func hideAllJoints2D() {
@@ -243,10 +243,25 @@ class ViewController: UIViewController, ARSessionDelegate {
                 }
             }
             
-            // update joint spheres, in case they're added
+            // add or update joint spheres
             if let character = character {
-                if jointSpheres.count == bodyAnchor.skeleton.jointModelTransforms.count, jointSpheres.count == character.jointNames.count {
-                    for  i in 0..<bodyAnchor.skeleton.jointModelTransforms.count {
+                if jointSpheres.count <= character.jointNames.count, initalSpheresTransforms.count <= character.jointNames.count {
+                    
+                    let remainingSpheresToAdd = initalSpheresTransforms.count - jointSpheres.count
+                    if remainingSpheresToAdd > 0 {
+                        if addSphereInterval < 5 {
+                            addSphereInterval += 1
+                        } else {
+                            addSphereInterval = 0
+                            let sphereToAddIndex = abs(remainingSpheresToAdd - initalSpheresTransforms.count)
+                            let newSphere = CustomSphere(color: .blue, radius: 0.025)
+                            newSphere.transform = initalSpheresTransforms[sphereToAddIndex]
+                            sphereAnchor.addChild(newSphere, preservingWorldTransform: true)
+                            jointSpheres.append(newSphere)
+                        }
+                    }
+                    
+                    for  i in 0..<jointSpheres.count {
                         let jointName = character.jointName(forPath: character.jointNames[i])
                         if let transform = bodyAnchor.skeleton.modelTransform(for: jointName) {
                             let position = bodyPosition + simd_make_float3(transform.columns.3)
