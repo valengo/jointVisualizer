@@ -10,7 +10,7 @@
         <!--ARView-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" userLabel="ARView" customClass="ViewController" customModule="BodyDetection" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" userLabel="ARView" customClass="ViewController" customModule="Joint_Visualizer" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC" userLabel="ARView" customClass="ARView" customModule="RealityKit">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -52,17 +52,29 @@
                                 </constraints>
                             </pickerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="put-cS-GBZ">
-                                <rect key="frame" x="364" y="65.5" width="30" height="27"/>
+                                <rect key="frame" x="364" y="65.5" width="30" height="27.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="84k-3d-bbi"/>
                                     <constraint firstAttribute="height" constant="30" id="f3k-SQ-CtC"/>
                                 </constraints>
-                                <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <state key="normal" backgroundImage="person.fill" catalog="system">
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" backgroundImage="person" catalog="system">
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="bold"/>
                                 </state>
                                 <connections>
                                     <action selector="toggleRobotVisibility" destination="BYZ-38-t0r" eventType="touchUpInside" id="EPl-OB-CP8"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VZq-o5-wFQ" userLabel="Remove Picked Joints">
+                                <rect key="frame" x="364" y="111" width="30" height="27.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="7Lr-4t-hIy"/>
+                                    <constraint firstAttribute="height" constant="30" id="dd1-gy-dXh"/>
+                                </constraints>
+                                <color key="tintColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" backgroundImage="clear" catalog="system"/>
+                                <connections>
+                                    <action selector="removeAllPickedJoints" destination="BYZ-38-t0r" eventType="touchUpInside" id="at7-9V-zar"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -71,7 +83,9 @@
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="iym-08-wRI" secondAttribute="bottom" constant="20" id="2Y7-ZY-1gE"/>
                             <constraint firstItem="put-cS-GBZ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="4bd-vS-ij6"/>
+                            <constraint firstItem="VZq-o5-wFQ" firstAttribute="top" secondItem="put-cS-GBZ" secondAttribute="bottom" constant="16" id="CgW-Na-Yas"/>
                             <constraint firstAttribute="trailing" secondItem="e8d-RC-SOZ" secondAttribute="trailing" constant="20" id="FAz-lN-KTZ"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="VZq-o5-wFQ" secondAttribute="trailing" constant="20" id="LVF-le-Vsj"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="iym-08-wRI" secondAttribute="trailing" constant="20" id="U3G-JR-c4r"/>
                             <constraint firstItem="iym-08-wRI" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="Vlj-cb-u14"/>
                             <constraint firstItem="e8d-RC-SOZ" firstAttribute="bottom" secondItem="iym-08-wRI" secondAttribute="top" constant="10" id="ez4-7G-I8t"/>
@@ -92,6 +106,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="person.fill" catalog="system" width="64" height="60"/>
+        <image name="clear" catalog="system" width="64" height="56"/>
+        <image name="person" catalog="system" width="64" height="58"/>
     </resources>
 </document>
